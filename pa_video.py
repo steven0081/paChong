@@ -17,9 +17,9 @@ def video_download(title,href):
     time.sleep(1)
     video_src = brower.find_element_by_xpath('//*[@id="JprismPlayer"]/video').get_attribute('src')
     #print(item.get_attribute('src'))
-    response = requests.get(video_src, headers=headers)
     fileName = "video\\" + title + ".mp4"
     with open(fileName, "wb") as f:
+        response = requests.get(video_src, headers=headers)
         f.write(response.content)
     brower.close()
 

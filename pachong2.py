@@ -10,9 +10,9 @@ headers = {
     "referer": "https://www.mzitu.com/tag/ugirls"
 }
 
-url = 'https://www.mzitu.com/186386'
+url = 'https://www.mzitu.com/188142'
 
-for i in range(1, 16):
+for i in range(1, 40):
     if i == 1 :
         response = requests.get(url, headers=headers)
     else:
