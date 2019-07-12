@@ -22,16 +22,6 @@ def video_download(title,href):
     with open(fileName, "wb") as f:
         f.write(response.content)
     brower.close()
-'''
-    response = requests.get(url, headers=headers).text
-    //print(response)
-    html = etree.HTML(response)
-    src = html.xpath('//*[@id="JprismPlayer"]/video/@src')
-    print(src)
-    '''
-
-
-
 
 url = "https://www.pearvideo.com/category_1"
 
@@ -42,20 +32,3 @@ videohref_list = html.xpath('//*[@id="categoryList"]/li[*]/div/a/@href')
 for t ,h in zip(videotitle_list, videohref_list):
     video_download(t.text, h)
     print(t.text,h)
-
-
-'''
-audio_data = json.loads(response)["data"]["tracksAudioPlay"]
-
-for audio_info in audio_data:
-    music_url = audio_info["src"]
-    music_name = audio_info["trackName"]
-    # music_name = music_url.split("/")[-1]
-    response = requests.get(music_url,headers=headers)
-    # fileName = "audio\\" + music_name + ".m4a"
-    with open("audio/{}".format(music_name + ".m4a"), "wb") as f:
-        f.write(response.content)
-
-# print(audio_data)
-
-'''
