@@ -10,7 +10,7 @@ headers = {
     "referer": "https://www.mzitu.com/tag/ugirls"
 }
 
-url = 'https://www.mzitu.com/187283'
+url = 'https://www.mzitu.com/187920'
 
 for i in range(1, 42):
     if i == 1 :
