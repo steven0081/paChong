@@ -18,8 +18,10 @@ def get_charpter(title, src):
     for src in zip(src_list):
         charpter = src[0].text
         content_src = src[0].get('href')
-        print(charpter)
-        print(content_src)
+        print(charpter, content_src)
+        file_name = '.\\books\\' + title + '.txt'
+        with open(file_name, 'a') as f:
+            f.write(charpter)
         get_content(title, charpter, content_src)
 
 def get_content(title, charpter, src):
@@ -29,18 +31,22 @@ def get_content(title, charpter, src):
     #print(len(src_list))
     for src in zip(src_list):
         content = src[0].text
-        print(content)
+        with open(file_name, 'a') as f:
+            f.write(content+'\n')
+        #print(content)
 
+# 主程序入口， 先爬取官场小说
 response= requests.get("https://www.95590.org/",headers=headers)
 html = etree.HTML(response.content)
 title_list = html.xpath('//*[@id="categories"]/ul/li[*]/a/text()')
 src_list =  html.xpath('//*[@id="categories"]/ul/li[*]/a/@href')
 #print(len(title_list))
 for title, src in zip(title_list, src_list):
-    print(title)
-    print(src)
-    if os.path.exists(title) == False:
-        os.mkdir('.\\books\\'+title)
+    title = str(title)[0: -5]
+    print(title, src)
+    file_name = '.\\books\\'+title+'.txt'
+    with open(file_name, 'w') as f:
+        f.write(title)
     get_charpter(title, src)
 
 
