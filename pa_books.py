@@ -1,7 +1,5 @@
 import requests
-import lxml
 from lxml import etree
-from lxml.etree import tostring
 import os
 
 headers = {
@@ -21,7 +19,7 @@ def get_charpter(title, src):
         print(charpter, content_src)
         file_name = '.\\books\\' + title + '.txt'
         with open(file_name, 'a') as f:
-            f.write(charpter)
+            f.write(charpter+'\n')
         get_content(title, charpter, content_src)
 
 def get_content(title, charpter, src):
