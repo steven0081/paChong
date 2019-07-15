@@ -2,7 +2,7 @@ import requests
 from lxml import etree
 import time
 import socket
-
+from selenium import webdriver
 
 socket.setdefaulttimeout(20)
 headers = {    'Accept': '*/*',
@@ -15,23 +15,16 @@ headers = {    'Accept': '*/*',
 
 def get_content(title, charpter, src):
     try:
-        response = requests.get(src, headers=headers)
-        html = etree.HTML(response.content)
-        src_list = html.xpath('//div[@class="entry-content"]/p')
-        # print(len(src_list))
-        for src in zip(src_list):
-            content = src[0].text
-            if content is not None:
-                content = content.encode('gbk', 'ignore').decode('gbk')
-                file_name = '.\\books\\' + title + '.txt'
-                with open(file_name, 'a') as f:
-                    f.write(content + '\n')
-            # print(content)
-        response.close()
+        brower = webdriver.Chrome()
+        brower.get(src)
+        time.sleep(1)
+        item_list = brower.find_elements_by_xpath('//div[@class="entry-content"]/p')
+        for item in item_list:
+            content = item.text
+            print(content)
     except Exception as e:
         print(e)
-    time.sleep(3)
-
+    brower.close()
 
 def get_charpter(title, src):
     response = requests.get(src, headers=headers)
