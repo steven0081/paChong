@@ -15,13 +15,20 @@ headers = {    'Accept': '*/*',
 
 def get_content(title, charpter, src):
     try:
+        #option = webdriver.ChromeOptions()
+        #option.add_argument('headless')
+        #brower = webdriver.Chrome(chrome_options=option)
         brower = webdriver.Chrome()
         brower.get(src)
-        time.sleep(1)
+        time.sleep(3)
         item_list = brower.find_elements_by_xpath('//div[@class="entry-content"]/p')
         for item in item_list:
             content = item.text
-            print(content)
+            if content is not None:
+                content = content.encode('gbk', 'ignore').decode('gbk')
+                file_name = '.\\books\\' + title + '.txt'
+                with open(file_name, 'a') as f:
+                    f.write(content + '\n')
     except Exception as e:
         print(e)
     brower.close()
@@ -38,7 +45,7 @@ def get_charpter(title, src):
         file_name = '.\\books\\' + title + '.txt'
         with open(file_name, 'a') as f:
             f.write(charpter + '\n')
-        time.sleep(3)
+        time.sleep(1)
         response.close()
         get_content(title, charpter, content_src)
 
@@ -47,7 +54,8 @@ response = requests.get("https://it.95590.org/", headers=headers)
 html = etree.HTML(response.content)
 title_list = html.xpath('//*[@id="categories"]/ul/li[*]/a/text()')
 src_list = html.xpath('//*[@id="categories"]/ul/li[*]/a/@href')
-book_list = ['刘强东·注定震惊世界', '任正非这个人', '雷军·人因梦想而伟大', '张亚勤·让智慧起舞']
+book_list = ['刘强东·注定震惊世界', '任正非这个人', '雷军·人因梦想而伟大',
+             '张亚勤·让智慧起舞', '华为狼道', 'IBM帝国缔造者']
 # print(len(title_list))
 for title, src in zip(title_list, src_list):
     title = str(title)[0:-5]
